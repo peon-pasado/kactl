@@ -63,8 +63,8 @@ vector<int> suffix_array(vector<int> &s, int char_bound = -1) {
 			if (group[a[i]] != group[a[i - 1]]) {
 				new_group[a[i]] = new_group[a[i - 1]] + 1;
 			} else {
-				int pre = (a[i - 1] + step >= n ? (a[i - 1] + step - n >= n? group[a[i - 1] + step - n - n] : group[a[i - 1] + step - n]) : group[a[i - 1] + step]);
-				int cur = (a[i] + step >= n ? (a[i] + step - n >= n? group[a[i] + step - n - n] : group[a[i] + step - n]) : group[a[i] + step]);
+				int pre = (a[i - 1] + step >= n ? group[a[i - 1] + step - n] : group[a[i - 1] + step]);
+				int cur = (a[i] + step >= n ? group[a[i] + step - n] : group[a[i] + step]);
 				new_group[a[i]] = new_group[a[i - 1]] + (pre != cur);
 			}
 		}
