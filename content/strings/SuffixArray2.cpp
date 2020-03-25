@@ -46,7 +46,7 @@ vector<int> suffix_array(vector<int> &s, int char_bound = -1) {
 			}
 			for(int j=L; j<R; j++){
 				if(a[j] - step < 0){
-					sorted_by_second[at++] = a[j] - step + n >= 0? a[j] - step + n : a[j] - step + n + n;
+					sorted_by_second[at++] = a[j] - step + n;
 				}
 			}
 			L = R;
