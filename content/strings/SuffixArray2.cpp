@@ -36,20 +36,8 @@ vector<int> suffix_array(vector<int> &s, int char_bound = -1) {
 	int step = 1;
 	while (step < n) {
 		int at = 0;
-		int L = 0, R = 0;
-		while(L < n){
-			while(R < n and group[a[L]] == group[a[R]]) R += 1;
-			for(int j=L; j<R; j++){
-				if(a[j] - step >= 0){
-					sorted_by_second[at++] = a[j] - step;
-				}
-			}
-			for(int j=L; j<R; j++){
-				if(a[j] - step < 0){
-					sorted_by_second[at++] = a[j] - step + n;
-				}
-			}
-			L = R;
+		for(int i = 0; i < n; i++){
+			sorted_by_second[at++] = a[i] - step < 0? a[i] - step + n : a[i] - step;
 		}
 		for (int i = n - 1; i >= 0; i--) {
 			ptr_group[group[a[i]]] = i;
@@ -71,6 +59,10 @@ vector<int> suffix_array(vector<int> &s, int char_bound = -1) {
 		swap(group, new_group);
 		step <<= 1;
 	}
+	sort(a.begin(),a.end(),[&](int i, int j){
+		if(group[i] == group[j]) return i < j;
+		return group[i] < group[j];
+	});
 	return a;
 }
 
