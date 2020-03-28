@@ -1,7 +1,14 @@
+// complexity: O(n^2m)
 #include <bits/stdc++.h>
+#define all(x) x.begin(), x.end()
+#define sz(x) (int)x.size()
+#define trav(i, x) for (auto i : x)
+#define re(x, y, z) for (int x=y; x<z; ++x)
+#define eb emplace_back
+#define tofill(x, v) fill(all(x), v)
 using namespace std;
-#define SZ(x) x.size()
 using ll = long long;
+using vi = vector<int>;
 const int inf = 1e9;
 struct Dinic {
 	struct Edge {
@@ -11,25 +18,24 @@ struct Dinic {
 			to(to), cap(cap), link(link), flow(flow) {}
 	};
 	vector<vector<Edge>> g;
-	vector<int> d, pt;
+	vi d, pt;
 	
 	Dinic(int n): g(n), d(n), pt(n) {}
 
 	void addEdge(int a, int b, int cap) {
 		if (a == b) return;
-	  int posa = SZ(g[a]), posb = SZ(g[b]);
-		g[a].emplace_back(b, cap, posb);
-		g[b].emplace_back(a, 0, posa);
+	  int pa = sz(g[a]), pb = sz(g[b]);
+		g[a].eb(b, cap, pb); g[b].eb(a, 0, pa);
 	}
 
 	bool bfs(int src, int snk) {
 		queue<int> q({src});
-		fill(d.begin(), d.end(), 0xfffffff);
+		tofill(d, inf);
 		d[src] = 0;
-		while (not q.empty()) {
+		while (!q.empty()) {
 			int v = q.front(); q.pop();
-			if (v == snk) return 1;
-			for (auto e : g[v]) {
+			if (v == snk) return true;
+			trav(e, g[v]) {
 				if (e.flow >= e.cap) continue;
 				if (d[e.to] > d[v] + 1) {
 					d[e.to] = d[v] + 1;
@@ -37,12 +43,12 @@ struct Dinic {
 				}
 			}
 		}
-		return 0;
+		return false;
 	}
 
 	int dfs(int x, int snk, int flow=inf) {
-		if (x == snk or not flow) return flow;
-		for (; pt[x] < SZ(g[x]); ++pt[x]) {
+		if (x == snk || !flow) return flow;
+		for (; pt[x] < sz(g[x]); ++pt[x]) {
 			auto& e = g[x][pt[x]];
 			if (d[e.to] == d[x] + 1) {
 				int res = min(e.cap - e.flow, flow);
@@ -59,7 +65,7 @@ struct Dinic {
 	ll solve(int s, int t) {
 		ll res = 0;
 		while (bfs(s, t)) {
-			fill(pt.begin(), pt.end(), 0);
+			tofill(pt, 0);
 			while (int flow = dfs(s, t)) {
 				res += flow;
 			}
@@ -67,4 +73,3 @@ struct Dinic {
 		return res;
 	}
 };
-
