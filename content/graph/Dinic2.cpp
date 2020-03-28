@@ -5,7 +5,7 @@
 #define trav(i, x) for (auto i : x)
 #define re(x, y, z) for (int x=y; x<z; ++x)
 #define eb emplace_back
-#define tofill(x, v) fill(all(x), v)
+#define fillall(x, v) fill(all(x), v)
 using namespace std;
 using ll = long long;
 using vi = vector<int>;
@@ -30,7 +30,7 @@ struct Dinic {
 
 	bool bfs(int src, int snk) {
 		queue<int> q({src});
-		tofill(d, inf);
+		fillall(d, inf);
 		d[src] = 0;
 		while (!q.empty()) {
 			int v = q.front(); q.pop();
@@ -65,7 +65,7 @@ struct Dinic {
 	ll solve(int s, int t) {
 		ll res = 0;
 		while (bfs(s, t)) {
-			tofill(pt, 0);
+			fillall(pt, 0);
 			while (int flow = dfs(s, t)) {
 				res += flow;
 			}
