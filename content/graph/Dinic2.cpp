@@ -24,7 +24,7 @@ struct Dinic {
 
 	void addEdge(int a, int b, int cap) {
 		if (a == b) return;
-	  int pa = sz(g[a]), pb = sz(g[b]);
+	  	int pa = sz(g[a]), pb = sz(g[b]);
 		g[a].eb(b, cap, pb); g[b].eb(a, 0, pa);
 	}
 
