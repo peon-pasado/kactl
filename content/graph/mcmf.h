@@ -1,4 +1,4 @@
-struct minCostMaxFlow {
+struct MinCostMaxFlow {
     struct Edge {
         int to, cap, flow, cost, link;
         Edge() {}
@@ -8,7 +8,7 @@ struct minCostMaxFlow {
     vector<vector<Edge>> g;
     vector<int> d, p;
  
-    minCostMaxFlow(int n): g(n), d(n), p(n) {}
+    MinCostMaxFlow(int n): g(n), d(n), p(n) {}
  
     void addEdge(int a, int b, int cost, int cap) {
         if (a == b) return;
