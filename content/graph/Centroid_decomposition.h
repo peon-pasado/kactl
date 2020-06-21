@@ -27,9 +27,11 @@ struct CentroidDecomposition {
 	}
 	int dfs(int x, int p=-1) {
 		sz[x] = 1;
-		for (int v : T[x])
-			if (valid(v, p))
+		for (int v : T[x]) {
+			if (valid(v, p)) {
 				sz[x] += dfs(v, x);
+			}
+		}
 		return sz[x];
 	}
 	int get_centroid(int x, int p, int n) {
@@ -40,9 +42,11 @@ struct CentroidDecomposition {
 	}
 	void calc_dist(int x, int r, int p=-1, int h=0) {
 		dist[r][x] = h;
-		for (int v : T[x])
-			if (valid(v, p))
+		for (int v : T[x]) {
+			if (valid(v, p)) {
 				calc_dist(v, r, x, h+1);
+			}
+		}
 	}
 	void decompose(int x, int p=-1, int r=0) {
 		int n = dfs(x);
