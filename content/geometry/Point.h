@@ -1,6 +1,6 @@
 /**
- * Author: Ulf Lundstrom
- * Date: 2009-02-26
+ * Author: Ulf Lundstrom, Miguel Miní
+ * Date: 2020-07-10
  * License: CC0
  * Source: My head with inspiration from tinyKACTL
  * Description: Class to handle points in the plane.
@@ -15,25 +15,33 @@ struct Point {
 	typedef Point P;
 	T x, y;
 	explicit Point(T x=0, T y=0) : x(x), y(y) {}
-	bool operator<(P p) const { return tie(x,y) < tie(p.x,p.y); }
-	bool operator==(P p) const { return tie(x,y)==tie(p.x,p.y); }
-	P operator+(P p) const { return P(x+p.x, y+p.y); }
-	P operator-(P p) const { return P(x-p.x, y-p.y); }
-	P operator*(T d) const { return P(x*d, y*d); }
-	P operator/(T d) const { return P(x/d, y/d); }
-	T dot(P p) const { return x*p.x + y*p.y; }
-	T cross(P p) const { return x*p.y - y*p.x; }
-	T cross(P a, P b) const { return (a-*this).cross(b-*this); }
-	T dist2() const { return x*x + y*y; }
-	double dist() const { return sqrt((double)dist2()); }
+	bool operator<(P p) const {return tie(x, y) < tie(p.x, p.y);}
+	bool operator==(P p) const {return tie(x, y)==tie(p.x, p.y);}
+	P operator+(P other) const {return P(x+other.x, y+other.y);}
+	P operator-(P other) const {return P(x-other.x, y-other.y);}
+	P operator*(T c) const {return P(x*c, y*c);}
+	P operator/(T c) const {return P(x/c, y/c);}
+	friend T operator*(T c, const P p) {return p*c;}
+	T operator*(P other) const {return x*other.x + y*other.y;}
+	T operator^(P other) const {return x*other.y - y*other.x;}
+	T dot(P other) const {return (*this)*other;}
+	T cross(P other) const {return (*this)^other;}
+	T cross(P a, P b) const {return (a-*this).cross(b-*this);}
+	T norm2() const {return x*x + y*y;}
+	double norm() const {return sqrt((double)norm2());}
+	friend double distance(P p, P q) {return (p-q).norm();}
 	// angle to x-axis in interval [-pi, pi]
-	double angle() const { return atan2(y, x); }
-	P unit() const { return *this/dist(); } // makes dist()=1
-	P perp() const { return P(-y, x); } // rotates +90 degrees
-	P normal() const { return perp().unit(); }
+	double angle() const {return atan2(y, x);}
+	P unit() const {return *this/norm();} // makes dist()=1
+	P perp() const {return P(-y, x);} // rotates +90 degrees
+	P normal() const {return perp().unit();}
 	// returns point rotated 'a' radians ccw around the origin
 	P rotate(double a) const {
-		return P(x*cos(a)-y*sin(a),x*sin(a)+y*cos(a)); }
-	friend ostream& operator<<(ostream& os, P p) {
-		return os << "(" << p.x << "," << p.y << ")"; }
+		return P(x*cos(a)-y*sin(a),x*sin(a)+y*cos(a));}
+	P rotate(Point other, double a) const {
+	    return (*this-other).rotate(a) + other;}
+	friend istream& operator>>(istream& is, P other) {
+	    return is >> other.x >> other.y;}
+	friend ostream& operator<<(ostream& os, P other) {
+		return os << "(" << other.x << "," << other.y << ")";}
 };
