@@ -35,7 +35,7 @@ struct Point {
     friend istream& operator>>(istream& is, P& other) {
       return is >> other.x >> other.y;}
     friend ostream& operator<<(ostream& os, P other) {
-      return os << "(" << other.x << "," << other.y << ")";}
+      return os << other.x << " " << other.y;}
 };
 
 template<class T>
@@ -63,8 +63,8 @@ struct Segment {
       }
       T t1 = q.ab^(a - q.a);
       T t2 = ab^(q.a - a);
-      if (s < 0) t1 = -t1;
       if (s > 0) t2 = -t2;
+      if (s < 0) t1 = -t1, s = -s;
       bool r1 = (0 <= t1 && t1 <= abs(s)) || isLine;
       bool r2 = (0 <= t2 && t2 <= abs(s)) || q.isLine;
       res = a + t1 * ab / s; //need double
