@@ -29,9 +29,9 @@ struct Point {
 	    return P(x*cos(a)-y*sin(a),x*sin(a)+y*cos(a));}
 	P rotate(Point other, double a) const {
 	    return (*this-other).rotate(a) + other;}
-	friend istream& operator>>(istream& is, P other) {
+	friend istream& operator>>(istream& is, P& other) {
 	    return is >> other.x >> other.y;}
-	friend ostream& operator<<(ostream& os, P& other) {
+	friend ostream& operator<<(ostream& os, P other) {
 	    return os << "(" << other.x << "," << other.y << ")";}
 };
 
