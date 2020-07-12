@@ -47,7 +47,8 @@ struct Segment {
       T s = ab^q.ab;
       if (s == 0) { //parallel
       	if (((q.a - a)^ab) == 0) { //same line
-      	    return (q.a.x <= b().x && a.x <= q.b().x) 
+      	    return (q.a.x <= b().x && a.x <= q.b().x
+                 && q.a.y <= b().y && a.y <= q.b().y) 
 		   || q.isLine || isLine;
       	}
       	return 0;
