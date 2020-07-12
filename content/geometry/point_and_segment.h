@@ -46,8 +46,8 @@ struct Segment {
     Segment(Point<T> a, Point<T> b, bool isLine=false):
             a(a), ab(b - a), isLine(isLine) {}
     Point<T> b() {return a + ab;}
-    enum type {NONE=0, ONE, IN};
     int intercept(Segment q, Point<T>& res) {
+      enum type {NONE=0, ONE, IN};
       T s = ab^q.ab;
       if (s == 0) { //parallel
         if (((q.a - a)^ab) == 0) { //same line
