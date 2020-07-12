@@ -68,13 +68,13 @@ struct Segment {
     	}
 		return abs((p - a) ^ ab) / ab.norm();
     }
-	double dist(Segment p) {
-		if (intercept(p)) return 0;
-		if (isLine && p.isLine) return abs((ab ^ (p.a - a))) / ab.norm();
-		double d1 = min(p.dist(a), p.dist(b()));
-		double d2 = min(dist(p.a), dist(p.b()));
-		if (isLine) return d2;
-		if (p.isLine) return d1;
-		return min(d1, d2);
-	}
+    double dist(Segment p) {
+	if (intercept(p)) return 0;
+	if (isLine && p.isLine) return abs((ab ^ (p.a - a))) / ab.norm();
+	double d1 = min(p.dist(a), p.dist(b()));
+	double d2 = min(dist(p.a), dist(p.b()));
+	if (isLine) return d2;
+	if (p.isLine) return d1;
+	return min(d1, d2);
+    }
 };
