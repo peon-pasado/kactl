@@ -13,7 +13,7 @@ struct Point {
     P operator-(P other) const {return P(x-other.x, y-other.y);}
     P operator*(T c) const {return P(x*c, y*c);}
     P operator/(T c) const {return P(x/c, y/c);}
-    friend T operator*(T c, const P p) {return p*c;}
+    friend P operator*(T c, const P p) {return p*c;}
     T operator*(P other) const {return x*other.x + y*other.y;}
     T operator^(P other) const {return x*other.y - y*other.x;}
     T dot(P other) const {return (*this)*other;}
@@ -46,15 +46,17 @@ struct Segment {
     Segment(Point<T> a, Point<T> b, bool isLine=false):
             a(a), ab(b - a), isLine(isLine) {}
     Point<T> b() {return a + ab;}
-    bool intercept(Segment q) {
+    enum type {NONE=0, ONE, IN};
+    int intercept(Segment q, Point<T>& res) {
       T s = ab^q.ab;
       if (s == 0) { //parallel
         if (((q.a - a)^ab) == 0) { //same line
-          if (q.isLine || isLine) return true;
+          if (q.isLine || isLine) return IN; //una incluye a la otra
           auto la = a, lb = b();
           auto ra = q.a, rb = q.b();
           if (la > lb) swap(la, lb);
           if (ra > rb) swap(ra, rb);
+          res = max(la, ra);
           return min(lb, rb) - max(la, ra) >= Point<T>(0, 0);
         }
         return 0;
@@ -65,7 +67,8 @@ struct Segment {
       if (s > 0) t2 = -t2;
       bool r1 = (0 <= t1 && t1 <= abs(s)) || isLine;
       bool r2 = (0 <= t2 && t2 <= abs(s)) || q.isLine;
-      return r1 && r2;
+      res = a + t1 * ab / s; //need double
+      return (r1 && r2) ? ONE : NONE;
     }
     double dist(Point<T> p) {
       if (!isLine) {
