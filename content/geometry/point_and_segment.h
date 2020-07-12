@@ -26,13 +26,13 @@ struct Point {
 	P normal() const {return perp().unit();}
 	// returns point rotated 'a' radians ccw around the origin
 	P rotate(double a) const {
-		return P(x*cos(a)-y*sin(a),x*sin(a)+y*cos(a));}
+	    return P(x*cos(a)-y*sin(a),x*sin(a)+y*cos(a));}
 	P rotate(Point other, double a) const {
 	    return (*this-other).rotate(a) + other;}
 	friend istream& operator>>(istream& is, P other) {
 	    return is >> other.x >> other.y;}
 	friend ostream& operator<<(ostream& os, P other) {
-		return os << "(" << other.x << "," << other.y << ")";}
+	    return os << "(" << other.x << "," << other.y << ")";}
 };
 
 template<class T>
@@ -47,9 +47,8 @@ struct Segment {
       T s = ab^q.ab;
       if (s == 0) { //parallel
       	if (((q.a - a)^ab) == 0) { //same line
-      		return (q.a.x <= b().x && a.x <= q.b().x) 
-				   || q.isLine 
-				   || isLine;
+      	    return (q.a.x <= b().x && a.x <= q.b().x) 
+		   || q.isLine || isLine;
       	}
       	return 0;
       }
@@ -63,10 +62,10 @@ struct Segment {
     }
     double dist(Point<T> p) {
     	if (!isLine) {
-    		if ((p - a) * ab <= 0) return p.dist(a);
-			if ((p - b()) * ab >= 0) return p.dist(b());	
+    	    if ((p - a) * ab <= 0) return p.dist(a);
+	    if ((p - b()) * ab >= 0) return p.dist(b());	
     	}
-		return abs((p - a) ^ ab) / ab.norm();
+	return abs((p - a) ^ ab) / ab.norm();
     }
     double dist(Segment p) {
 	if (intercept(p)) return 0;
