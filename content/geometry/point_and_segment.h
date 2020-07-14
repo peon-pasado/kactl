@@ -86,4 +86,11 @@ struct Segment {
       if (p.isLine) return d1;
       return min(d1, d2);
     }
+    Point<T> closest(Point<T> p) {
+      if (!isLine) {
+        if ((p-a) * ab <= 0) return a;
+        if ((p-b()) * ab >= 0) return b();
+      }
+      return ab * (ab * (p-a)) / (ab * ab) + a;
+    }
 };
