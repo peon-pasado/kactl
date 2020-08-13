@@ -53,11 +53,11 @@ struct Aho_Corasick {
 	int go(int x, int c) {
 		return T[x][c];
 	}
-  bool has_match(int x) {
-    return match[x] || L[x];
-  }
-	int len_match(int x) {
-    if (match[x]) return len[x];
-    return len[L[x]];
-  }
+  	bool has_match(int x) {
+    		return match[x] || L[x];
+  	}
+  	int len_match(int x) {
+    		if (match[x]) return len[x];
+    		return len[L[x]];
+  	}
 };
