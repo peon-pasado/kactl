@@ -47,16 +47,16 @@ struct Aho_Corasick {
 		return S[x] = p[x] ? go(suff(p[x]), inc[x]) : 0;
 	}
 	int super(int x){
-    if (~L[x]) return L[x];
-    if (!x) return L[x]=0; 
-    if (match[suff(x)]) return L[x]=suff(x);
-    return L[x]=super(suff(x));
-  }
-  bool has_match(int x) {
-    return match[x] || super(x);	
-  }
+    		if (~L[x]) return L[x];
+    		if (!x) return L[x]=0; 
+    		if (match[suff(x)]) return L[x]=suff(x);
+    		return L[x]=super(suff(x));
+  	}
+  	bool has_match(int x) {
+    		return match[x] || super(x);	
+  	}
 	int len_match(int x) {
-    if (match[x]) return len[x];
-    return len[super(x)];
-  }
+    		if (match[x]) return len[x];
+    		return len[super(x)];
+  	}
 };
