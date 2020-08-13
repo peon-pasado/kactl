@@ -22,6 +22,7 @@ struct Aho_Corasick {
 		memset(S, -1, sizeof S);
 		memset(L, -1, sizeof L);
 		memset(match, 0, sizeof match);
+		S[0] = L[0] = 0;
 		len[0] = 0;
 	}
 	void add(const string& s, int r=0) {
@@ -42,8 +43,7 @@ struct Aho_Corasick {
 		while(!Q.empty()){
 			int u = Q.front();
 			Q.pop();
-			if(!u) L[u] = 0;
-			else L[u] = match[S[u]]? S[u] : L[S[u]];
+			if(u) L[u] = match[S[u]]? S[u] : L[S[u]];
 			for(int i = 0; i < sigma; i++){
 				if(~T[u][i]){
 					int v = T[u][i];
@@ -55,6 +55,10 @@ struct Aho_Corasick {
 				}
 			}
 		}
+	}
+
+	int go(int x, int c){
+		return T[x][c];
 	}
 
   	bool has_match(int x) {
