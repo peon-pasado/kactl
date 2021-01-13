@@ -42,3 +42,42 @@ template<class T> struct Point3D {
 		return u*dot(u)*(1-c) + (*this)*c - cross(u)*s;
 	}
 };
+
+
+Matrix translate(Point p) { //T(u) = u + p 
+  Matrix R;
+  R.one();
+  R.mat[0][3] = p.x;
+  R.mat[1][3] = p.y;
+  R.mat[2][3] = p.z;
+  return R;
+}
+
+Matrix scale(Point p) { //T(u) = (p.x * u, p.y * u, p.z * u)
+  Matrix R;
+  R.mat[0][0] = p.x;
+  R.mat[1][1] = p.y;
+  R.mat[2][2] = p.z;
+  R.mat[3][3] = 1;
+  return R;
+}
+
+Matrix rotate(Point p, double alpha) { //rotate alpha counterclockwise through vector p
+  Matrix W;
+  p = p.unit();
+  W.mat[0][1] = -p.z;
+  W.mat[0][2] = p.y;
+  W.mat[1][0] = p.z;
+  W.mat[1][2] = -p.x;
+  W.mat[2][0] = -p.y;
+  W.mat[2][1] = p.x;
+  Matrix R;
+  R.one();
+  R.mat[3][3] = 0;
+  R = R + sin(alpha) * W + (1 - cos(alpha)) * W * W;
+  R.mat[3][3] = 1;
+  return R;
+}
+
+
+
