@@ -20,6 +20,15 @@ struct Point {
     template<class U>
     bool operator==(const Point<U> p) const {return abs(x-p.x)<eps&&abs(y-p.y)<eps;}
     
+    //asign expresions
+    template<class U>
+    P& operator+=(Point<U> p) {return *this=*this+p;}
+    template<class U>
+    P& operator-=(Point<U> p) {return *this=*this-p;}
+    template<class U>
+    P& operator=(Point<U> p) {return *this=p;}
+    
+    
     //geometry operations
     template<class U>
     auto dot(const Point<U> p) const {return (*this)*p;}
