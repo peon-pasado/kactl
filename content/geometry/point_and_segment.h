@@ -24,6 +24,7 @@ struct Point {
     double dist(P p) {return (p-(*this)).norm();}
     // angle to x-axis in interval [-pi, pi]
     double angle() const {return atan2(y, x);}
+    double angle(P p) const {return atan2(*this ^ p, *this * p);} //[-pi, pi]
     P unit() const {return *this/norm();} // makes dist()=1
     P perp() const {return P(-y, x);} // rotates +90 degrees
     P normal() const {return perp().unit();}
