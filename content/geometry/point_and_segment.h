@@ -1,4 +1,3 @@
-template <class T> int sgn(T x) { return (x > 0) - (x < 0); }
 template<class T>
 struct Point {
     typedef Point P;
@@ -38,6 +37,16 @@ struct Point {
     friend ostream& operator<<(ostream& os, P other) {
       return os << other.x << " " << other.y;}
 };
+
+template<typename T>
+bool isAbove(Point<T> const& iPoint) {
+    return (iPoint.y > 0) || (iPoint.y == 0 && iPoint.x > 0);
+}
+
+template<typename T>
+bool projectiveOrder(Point<T> const& iLeft, Point<T> const& iRight) {
+    return (isAbove(iLeft) == isAbove(iRight)) ^ ((iLeft ^ iRight) > 0);
+}
 
 template<class T>
 struct Segment {
