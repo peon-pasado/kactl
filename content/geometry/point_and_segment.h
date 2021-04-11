@@ -48,6 +48,21 @@ bool projectiveOrder(Point<T> const& iLeft, Point<T> const& iRight) {
     return (isAbove(iLeft) == isAbove(iRight)) ^ ((iLeft ^ iRight) > 0);
 }
 
+template <class Iterator, class F>
+void sortByAngle(Iterator first, Iterator last, const Point<F>& origin) {
+  first = partition(first, last, [&origin](const auto& point) {
+    return point == origin; 
+  });
+  auto pivot = partition(first, last, [&origin](const auto& point) {
+    return point > origin; 
+  });
+  auto cmp = [&origin](auto p, auto q) {
+    return  ((p-origin)^(q-origin)) < 0;
+  };
+  sort(first, pivot, cmp);
+  sort(pivot, last, cmp);
+}
+
 template<class T>
 struct Segment {
     Point<T> a, ab;
