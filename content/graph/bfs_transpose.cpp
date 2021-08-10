@@ -3,6 +3,7 @@
  * @name BFS-TRANPOSE
  * @input: a graph g with nodes between 0 and sz(g)-1.
  * @output: number of components and nodes in each component.
+ * @complexity: O(|V| + |E|)
 **/
 
 int bfs_tranpose(vector<vector<int>>& g, vector<vector<int>>& components) {
