@@ -9,7 +9,7 @@ int bfs_tranpose(vector<vector<int>>& g, vector<vector<int>>& components) {
 	vector<int> inB(g.size(), -1);
 	vector<int> B(g.size());
 	iota(B.begin(), B.end(), 0);
-	int res = 0;
+	int n_components = 0;
 	do {
 		queue<int> Q;
 		Q.push(B.back());
@@ -27,8 +27,8 @@ int bfs_tranpose(vector<vector<int>>& g, vector<vector<int>>& components) {
 				else Q.push(B[i]);
 			B.resize(j);
 		}
-		res++;
+		n_components++;
 		//close component
 	} while (!B.empty());
-	return res;
+	return n_components;
 }
