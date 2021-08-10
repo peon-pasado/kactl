@@ -14,12 +14,12 @@ int bfs_tranpose(vector<vector<int>>& g, vector<vector<int>>& components) {
 		queue<int> Q;
 		Q.push(B.back());
 		B.pop_back();
-    components.push_back(vector<int>());
+    		components.push_back(vector<int>());
 		//open component
 		while (!Q.empty()) {
 			int q = Q.front(); Q.pop();
 			//q is a component node
-      components.back().push_back(q);
+      			components.back().push_back(q);
 			for (int u : g[q]) inB[u] = q;
 			int j = 0;
 			for (int i = 0; i < B.size(); ++i)
