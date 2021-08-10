@@ -5,7 +5,6 @@
  * @output: number of components and nodes in each component.
 **/
 
-
 int bfs_tranpose(vector<vector<int>>& g, vector<vector<int>>& components) {
 	vector<int> inB(g.size(), -1);
 	vector<int> B(g.size());
