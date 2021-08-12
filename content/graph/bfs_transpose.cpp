@@ -2,18 +2,19 @@
  * @Author Miguel Mini
  * @name BFS-TRANPOSE
  * @input: a graph g with nodes between 0 and sz(g)-1.
- * @output: number of components, nodes in each component and distance from node 0.
+ * @output: number of components, nodes in each component and distance from node src.
  * @complexity: O(|V| + |E|)
 **/
 
-int bfs_tranpose(vector<vector<int>>& g, vector<vector<int>>& components, vector<int>& dist) {
+int bfs_tranpose(int src, vector<vector<int>>& g, vector<vector<int>>& components, vector<int>& dist) {
 	vector<int> inB(g.size(), -1);
 	vector<int> B(g.size());
 	for (int i = 0; i < n; ++i) {
-		B[i] = (int)g.sizze()-1-i;
+		B[i] = i;
 		dist[i] = 1e9;
 	}
-	dist[0] = 0;
+	dist[src] = 0;
+	swap(B.back(), B[src]);
 	int n_components = 0;
 	do {
 		queue<int> Q;
