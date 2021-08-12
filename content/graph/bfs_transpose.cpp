@@ -7,8 +7,9 @@
 **/
 
 int bfs_tranpose(int src, vector<vector<int>>& g, vector<vector<int>>& components, vector<int>& dist) {
-	vector<int> inB(g.size(), -1);
-	vector<int> B(g.size());
+	int n = g.size();
+	vector<int> inB(n, -1);
+	vector<int> B(n);
 	for (int i = 0; i < n; ++i) {
 		B[i] = i;
 		dist[i] = 1e9;
