@@ -82,7 +82,6 @@ struct CentroidDecomposition {
 				a[i + j] += z;
 			}
 	}
-	
 	vector<long long> multiply(const vector<int> &A, const vector<int> &B) {
 		vector<long long> result(A.size() + B.size() - 1);
 		int L = 32 - __builtin_clz(result.size()), n = 1 << L;
