@@ -1,3 +1,27 @@
+#define rep(i,n) for(int (i)=0;(i)<(int)(n);++(i))
+#define rer(i,l,u) for(int (i)=(int)(l);(i)<=(int)(u);++(i))
+#define reu(i,l,u) for(int (i)=(int)(l);(i)<(int)(u);++(i))
+#define aut(v, x) __typeof(x) v = (x)
+#define each(it,o) for(__typeof((o).begin()) it = (o).begin(); it != (o).end(); ++ it)
+#define all(o) (o).begin(), (o).end()
+#define pb(x) push_back(x)
+#define mp(x,y) make_pair((x),(y))
+#define mset(m,v) memset(m,v,sizeof(m))
+#define INF 0x3f3f3f3f
+#define INFL 0x3f3f3f3f3f3f3f3fLL
+
+using namespace std;
+typedef vector<int> vi; 
+typedef pair<int,int> pii; 
+typedef vector<pair<int,int> > vpii;
+typedef long long ll; 
+typedef vector<long long> vl; 
+typedef pair<long long,long long> pll; 
+typedef vector<pair<long long,long long> > vpll;
+typedef vector<string> vs; 
+typedef long double ld;
+
+
 typedef double Num;
 typedef short Var;
 typedef vector<Num> Vec;
