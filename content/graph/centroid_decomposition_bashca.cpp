@@ -64,8 +64,8 @@ int lca(int u, int v) {
 void ancestor(int x){
 	for(int v = x; ~v; v = pi[v])
 		if (lo[v] <= lo[x] && hi[x] <= hi[v]) {
-      //<-update/query ancestor 
-    }
+      		//<-update/query ancestor 
+    	}
 }
 
 void descendant(int u, int x, int d) {
