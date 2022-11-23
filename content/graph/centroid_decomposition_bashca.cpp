@@ -2,7 +2,7 @@
 using namespace std;
 
 const int maxn = 3e5 + 10;
-const int maxl = 19;
+const int maxl = 18;
 using ll = long long;
 vector<int> g[maxn];
 int sz[maxn], pi[maxn];
@@ -25,6 +25,20 @@ int find_centroid(int v, int parent, int n_v) {
     pi[centroid = v] = parent;
   return centroid;
 }
+
+int find_centroid(int v, int p, int n_v) {
+  sz[v] = 1;
+  int centroid = -1;
+  for (int u : g[v]) {
+    if (u == p || blocked[u]) continue;
+    int c = find_centroid(u, v, n_v);
+    sz[v] += sz[u];
+    if (2 * sz[u] > n) centroid = c;
+  }
+  if (centroid==-1) centroid=v;
+  return centroid;
+}
+
 
 void decompose(int x, int parent = -1, int n_v = n) {
   x = find_centroid(x, -1, n_v);

@@ -71,6 +71,7 @@ struct Segment {
     Segment(Point<T> a, Point<T> b, bool isLine=false):
             a(a), ab(b - a), isLine(isLine) {}
     Point<T> b() {return a + ab;}
+    
     int intercept(Segment q, Point<T>& res) {
       enum type {NONE=0, ONE, IN};
       T s = ab^q.ab;

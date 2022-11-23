@@ -1,26 +1,26 @@
+
 const double eps = 1e-8;
 template<class T>
 struct Point {
     typedef Point P;
     T x, y;
     explicit Point(T x=0, T y=0) : x(x), y(y) {}
-    
-    void swap(Point&& p) {swap(x, p.x); swap(y, p.y);}
+
     template <class U> 
     explicit operator Point<U>() const {return Point<U>(static_cast<U>(x), static_cast<U>(y));}
     //bool operations
     template<class U>
-    bool operator<(const Point<U> p) const {return x<p.x+eps||(abs(x-p.x)<eps&&y<p.y+eps);}
+    bool operator==(const Point<U> p) const {return abs(x-p.x)<eps&&abs(y-p.y)<eps;}
+    template<class U>
+    bool operator<(const Point<U> p) const {return x+eps<=p.x||(abs(x-p.x)<eps&&y+eps<=p.y);}
     template<class U>
     bool operator>(const Point<U> p) const {return p<*this;}
     template<class U>
-    bool operator<=(const Point<U> p) const {return !(*this>p);}
+    bool operator<=(const Point<U> p) const {return (*this<p)||(*this==p);}
     template<class U>
-    bool operator>=(const Point<U> p) const {return !(*this<p);}
-    template<class U>
-    bool operator==(const Point<U> p) const {return abs(x-p.x)<eps&&abs(y-p.y)<eps;}
+    bool operator>=(const Point<U> p) const {return p<=*this;}
     
-    //asign expresions
+    //assign expresions
     template<class U>
     P& operator+=(Point<U> p) {return *this=*this+p;}
     template<class U>
@@ -37,7 +37,7 @@ struct Point {
     template<class U, class V>
     auto cross(const Point<U> p, const Point<V> q) const {return (p-*this)^(q-*this);}
     auto norm2() const {return (*this)*(*this);}
-    auto norm() const {return sqrt(norm2());}
+    auto norm() const {return sqrtll(norm2());}
     template<class U>
     auto dist(Point<U> p) {return (p-*this).norm();}
     auto angle() const {return atan2(y, x);}
@@ -61,18 +61,22 @@ template<class U, class V>
 auto operator+(const Point<U> p, const Point<V> q) {
     return Point(p.x+q.x, p.y+q.y);
 }
+
 template<class U, class V>
 auto operator-(const Point<U> p, const Point<V> q) {
     return Point(p.x-q.x, p.y-q.y);
 }
+
 template<class U, class T>
 auto operator*(const Point<U> p, const T c) {
     return Point(p.x*c, p.y*c);
 }
+
 template<class U, class T> 
 auto operator/(const Point<U> p, const T c) {
     return Point(p.x/c, p.y/c);
 }
+
 template<class T, class U>
 auto operator*(const T c, const Point<U> p) {
     return p*c;
@@ -83,10 +87,12 @@ template<class U, class V>
 auto operator*(const Point<U> p, const Point<V> q) {
     return p.x*q.x+p.y*q.y;
 }
+
 template<class U, class V>
 auto operator^(const Point<U> p, const Point<V> q) {
     return p.x*q.y-p.y*q.x;
 }
+
 template<class U>
 auto rot(const Point<U> p, double alpha) {
     Point sc(sin(alpha), cos(alpha));
