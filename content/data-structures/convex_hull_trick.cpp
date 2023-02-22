@@ -1,10 +1,11 @@
-template<class T>
+template<class T> 
 struct cvxHull {
     using P = Point<T>;
     using F = function<bool(P,P)>;
     deque<P> at;
     F r;
     cvxHull(F cmp = [](P p, P q) {return (p ^ q)>=0;}): r(cmp) {}
+    //se necesita que x1 > x2 > ... (si hay empates yi en orden creciente)
     void push(P nw) {
         while (sz(at)>1&&r(at.back()-at[sz(at)-2], nw-at[sz(at)-2])) at.popb();
         at.pushb(nw);
@@ -12,6 +13,7 @@ struct cvxHull {
     T f(P p, P q) {
         return p*q;
     }
+    //para remover se necesita que las consultas sean no decrecientes x1 <= x2 ...
     void remove(T x) {
         return remove(P(x, 1));
     }

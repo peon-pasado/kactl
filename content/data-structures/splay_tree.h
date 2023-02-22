@@ -39,7 +39,7 @@ struct splay_tree {
  
     void splay(node* v) {
         if (!v) return;
-        while (!r || r->p) {
+        while (!v || v->p) {
             Node* u = v->p;
             if (!u || u->p) {
                 if ((u->l==v)^(u->p->l==u)) rot(v);
