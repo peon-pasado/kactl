@@ -18,22 +18,24 @@
  * GCD can be improved by a factor of 1.75x using Binary GCD
  * (https://lemire.me/blog/2013/12/26/fastest-way-to-compute-the-greatest-common-divisor/).
  * However, with the gcd accumulation the bottleneck moves from the gcd calls
- * to the mod_mul. As GCD only constitutes ~12% of runtime, speeding it up
+ * to the modmul. As GCD only constitutes ~12% of runtime, speeding it up
  * doesn't matter so much.
  *
  * This code can probably be sped up by using a faster mod mul - potentially
  * montgomery reduction on 128 bit integers.
  * Alternatively, one can use a quadratic sieve for an asymptotic improvement,
- * which starts being factor in practice around 1e13.
+ * which starts being faster in practice around 1e13.
  *
- * Brent's cycle finding algorithm was tested, but doesn't reduce mod_mul calls
+ * Brent's cycle finding algorithm was tested, but doesn't reduce modmul calls
  * significantly.
  *
  * Subtle implementation notes:
- * - we operate on residues in [1, n]; mod_mul can be proven to work for those
+ * - we operate on residues in [1, n]; modmul can be proven to work for those
  * - prd starts off as 2 to handle the case n = 4; it's harmless for other n
  *   since we're guaranteed that n > 2. (Pollard rho has problems with prime
  *   powers in general, but all larger ones happen to work.)
+ * - t starts off as 30 to make the first gcd check come earlier, as an
+ *   optimization for small numbers.
  */
 #pragma once
 
@@ -41,11 +43,11 @@
 #include "MillerRabin.h"
 
 ull pollard(ull n) {
-	auto f = [n](ull x) { return mod_mul(x, x, n) + 1; };
-	ull x = 0, y = 0, t = 0, prd = 2, i = 1, q;
+	auto f = [n](ull x) { return modmul(x, x, n) + 1; };
+	ull x = 0, y = 0, t = 30, prd = 2, i = 1, q;
 	while (t++ % 40 || __gcd(prd, n) == 1) {
 		if (x == y) x = ++i, y = f(x);
-		if ((q = mod_mul(prd, max(x,y) - min(x,y), n))) prd = q;
+		if ((q = modmul(prd, max(x,y) - min(x,y), n))) prd = q;
 		x = f(x), y = f(f(y));
 	}
 	return __gcd(prd, n);

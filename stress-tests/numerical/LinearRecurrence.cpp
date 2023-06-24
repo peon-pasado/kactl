@@ -15,14 +15,13 @@ void gen(vector<ll>& v, int at, F f) {
 
 int main() {
 	rep(n,1,5) {
-		cerr << n << endl;
 		vector<ll> start(n);
 		vector<ll> coef(n);
 		int size = 10*n + 3;
 		vector<ll> full(size);
 		gen(start,0,[&]() {
 			gen(coef,0,[&]() {
-				trav(x,full) x = 0;
+				for(auto &x:full) x = 0;
 				rep(i,0,n) full[i] = start[i];
 				rep(i,n,size) rep(j,0,n) full[i] = (full[i] + coef[j] * full[i-1 - j]) % mod;
 	// rep(i,0,size) cerr << full[i] << ' '; cerr << endl;

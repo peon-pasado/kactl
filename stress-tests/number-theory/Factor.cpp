@@ -3,7 +3,6 @@
 #include "../../content/number-theory/Factor.h"
 
 mt19937_64 uni(time(0));
-const int ITERS=1e4;
 void assertValid(ull N, vector<ull> prFac){
     ull cur=1;
     for (auto i: prFac){
@@ -28,10 +27,10 @@ int main() {
         res = factor(n*ll(n));
         assertValid(n*ll(n), res);
     }
-    rep(i,2,ITERS) {
-        ull n = 1 + (uni()%(1ul<<63));
+    rep(i,2,1e5) {
+        ull n = 1 + (uni()%(3ul<<61));
         auto res = factor(n);
         assertValid(n, res);
     }
-    cout<<"Prime Factoring tests passed!"<<endl;
+    cout<<"Tests passed!"<<endl;
 }

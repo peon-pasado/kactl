@@ -102,7 +102,7 @@ int Directed_MST(int root, int NV, int NE) {
 
 int adj[105][105];
 int main() {
-	rep(it,0,100000) {
+	rep(it,0,50000) {
 		bumpalloc.reset();
 		int n = (rand()%20)+1;
 		int density = rand() % 101;
@@ -118,18 +118,20 @@ int main() {
 				edges.push_back({i,j,weight});
 				adj[i][j] = weight;
 			}
+
 		ll ans1 = mit::Directed_MST(r, n, cnt);
-		ll ans2 = dmst(n, r, edges);
+		auto pa = dmst(n, r, edges);
+		ll ans2 = pa.first;
 		assert(ans1 == ans2);
-		// For verifying a reconstruction:
-		/*
+
+		// Verifying reconstruction:
 		if (ans1 != -1) {
 			vi par = pa.second;
-			if (debug) {
+			if (0) {
 				cout << "r = " << r << endl;
-				trav(x, par) cout << x << ' ';
+				for(auto &x: par) cout << x << ' ';
 				cout << endl;
-				trav(e, edges) {
+				for(auto &e: edges) {
 					cout << e.a << ' ' << e.b << ' ' << e.w << endl;
 				}
 			}
@@ -148,11 +150,10 @@ int main() {
 			rep(qi,0,sz(q)) {
 				int s = q[qi];
 				if (!seen[s]++)
-					trav(x, ch[s]) q.push_back(x);
+					for(auto &x: ch[s]) q.push_back(x);
 			}
 			assert(count(all(seen), 0) == 0);
 		}
-		*/
 	}
 	cout<<"Tests passed!"<<endl;
 	return 0;

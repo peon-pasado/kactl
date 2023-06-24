@@ -26,8 +26,8 @@ int main() {
 				int a = (rand() >> 4) % N;
 				int b = (rand() >> 4) % N;
 				uf.e.assign(N, -1);
-				trav(ed, edges) uf.join(ed.first, ed.second);
-				bool c = uf.same_set(a, b);
+				for(auto &ed: edges) uf.join(ed.first, ed.second);
+				bool c = uf.sameSet(a, b);
 				if (!c && v != 1) {
 					lc.link(a, b);
 					edges.emplace_back(a, b);

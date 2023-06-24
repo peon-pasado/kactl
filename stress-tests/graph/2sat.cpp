@@ -87,16 +87,16 @@ int main() {
 				}
 				r.push_back(ra() % (2*N) - N);
 				random_shuffle(all(r), [](int x) { return ra() % x; });
-				ts.at_most_one(r);
+				ts.atMostOne(r);
 				atm.push_back(r);
 			}
 		}
 		assert(ts.solve());
 		int to = 0;
 		rep(i,0,N) to += (ts.values[i] == v[i]);
-		trav(r, atm) {
+		for(auto &r: atm) {
 			int co = 0;
-			trav(x, r) co += (ts.values[max(x, ~x)] == (x >= 0));
+			for(auto &x: r) co += (ts.values[max(x, ~x)] == (x >= 0));
 			assert(co <= 1);
 		}
 	}

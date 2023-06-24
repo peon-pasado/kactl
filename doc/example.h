@@ -5,12 +5,12 @@
  * Source: Conversation with Håkan and Ulf.
  * Description: Example structures and functions that doesn't really do
  *  anything. Latex commands are supported here, though! Like this: $2^2=3$
- * Time: O(M * N^4) where M = cats, N = mice
- * Memory: O(2^N) where N = cats
- * Status: Unknown
  * Usage:
  *  int res = exampleFunction1(mice, cats, catsCount);
  *  int random = exampleFunction2();
+ * Time: O(M * N^4) where M = cats, N = mice
+ * Memory: O(2^N) where N = cats
+ * Status: Untested
  */
 #pragma once
 
@@ -30,7 +30,7 @@ int exampleFunction1(vi mice, int* cats, int catsCount) {
 
 	rep(i, 1, catsCount) {
 		// This comment will be kept!
-		trav(it, mice) {
+		for (auto it : mice) {
 			/// This will be removed.
 			// And this kept.
 			sum += cats[i] * it;

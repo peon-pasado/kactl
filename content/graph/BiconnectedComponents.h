@@ -8,14 +8,14 @@
  *  are at least two distinct paths between any two nodes. Note that a node can
  *  be in several components. An edge which is not in a component is a bridge,
  *  i.e., not part of any cycle.
- * Time: O(E + V)
- * Status: tested during MIPT ICPC Workshop 2017
  * Usage:
  *  int eid = 0; ed.resize(N);
  *  for each edge (a,b) {
  *    ed[a].emplace_back(b, eid);
  *    ed[b].emplace_back(a, eid++); }
  *  bicomps([\&](const vi\& edgelist) {...});
+ * Time: O(E + V)
+ * Status: tested during MIPT ICPC Workshop 2017
  */
 #pragma once
 
@@ -25,7 +25,7 @@ int Time;
 template<class F>
 int dfs(int at, int par, F& f) {
 	int me = num[at] = ++Time, e, y, top = me;
-	trav(pa, ed[at]) if (pa.second != par) {
+	for (auto pa : ed[at]) if (pa.second != par) {
 		tie(y, e) = pa;
 		if (num[y]) {
 			top = min(top, num[y]);

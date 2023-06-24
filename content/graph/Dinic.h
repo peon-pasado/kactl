@@ -18,7 +18,7 @@ struct Dinic {
 	vi lvl, ptr, q;
 	vector<vector<Edge>> adj;
 	Dinic(int n) : lvl(n), ptr(n), q(n), adj(n) {}
-	void addEdge(int a, int b, ll c, int rcap = 0) {
+	void addEdge(int a, int b, ll c, ll rcap = 0) {
 		adj[a].push_back({b, sz(adj[b]), c, c});
 		adj[b].push_back({a, sz(adj[a]) - 1, rcap, rcap});
 	}
@@ -41,7 +41,7 @@ struct Dinic {
 			int qi = 0, qe = lvl[s] = 1;
 			while (qi < qe && !lvl[t]) {
 				int v = q[qi++];
-				trav(e, adj[v])
+				for (Edge e : adj[v])
 					if (!lvl[e.to] && e.c >> (30 - L))
 						q[qe++] = e.to, lvl[e.to] = lvl[v] + 1;
 			}
@@ -49,4 +49,5 @@ struct Dinic {
 		} while (lvl[t]);
 		return flow;
 	}
+	bool leftOfMinCut(int a) { return lvl[a] != 0; }
 };

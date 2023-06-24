@@ -6,7 +6,7 @@
  * Description: Container where you can add lines of the form kx+m, and query maximum values at points x.
  *  Useful for dynamic programming (``convex hull trick'').
  * Time: O(\log N)
- * Status: tested
+ * Status: stress-tested
  */
 #pragma once
 
@@ -18,11 +18,11 @@ struct Line {
 
 struct LineContainer : multiset<Line, less<>> {
 	// (for doubles, use inf = 1/.0, div(a,b) = a/b)
-	const ll inf = LLONG_MAX;
+	static const ll inf = LLONG_MAX;
 	ll div(ll a, ll b) { // floored division
 		return a / b - ((a ^ b) < 0 && a % b); }
 	bool isect(iterator x, iterator y) {
-		if (y == end()) { x->p = inf; return false; }
+		if (y == end()) return x->p = inf, 0;
 		if (x->k == y->k) x->p = x->m > y->m ? inf : -inf;
 		else x->p = div(y->m - x->m, x->k - y->k);
 		return x->p >= y->p;

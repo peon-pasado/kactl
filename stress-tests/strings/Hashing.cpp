@@ -2,8 +2,6 @@
 
 #include "../../content/strings/Hashing.h"
 
-typedef uint64_t ull;
-
 #include <sys/time.h>
 int main() {
 	assert((H(1)*2+1-3).get() == 0);
@@ -38,4 +36,5 @@ int main() {
 		// No collisions
 		assert(sz(strs) == sz(hashes));
 	}
+	cout<<"Tests passed!"<<endl;
 }
