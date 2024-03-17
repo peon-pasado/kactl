@@ -1,7 +1,7 @@
 /**
- * @author Miguel Mini
+ * Author: Miguel Mini
  * @tag dp, amortized
- * @use: 
+ * Description: 
  *    - minimum number of deleted edges to
  *    isolate a connect k-componente.
  * @complexity O(nk)

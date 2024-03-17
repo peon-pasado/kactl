@@ -1,3 +1,10 @@
+/**
+ * Author: Rating MiSeRable
+ * Date: 2020-10-01
+ * License: CC0
+ * Source: ?
+ * Description: Todo
+ */
 
 const double eps = 1e-8;
 template<class T>

@@ -1,3 +1,11 @@
+/**
+ * Author: Rating MiSeRable
+ * Date: 2020-10-01
+ * License: CC0
+ * Source: ?
+ * Description: Todo
+ */
+
 int parent[maxn];
 vector<int> aux[maxn];
 vector<int> auxiliary_tree(vector<int> nodes) {

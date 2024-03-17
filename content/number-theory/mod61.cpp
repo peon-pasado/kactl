@@ -1,3 +1,11 @@
+/**
+ * Author: Rating MiSeRable
+ * Date: 2020-10-01
+ * License: CC0
+ * Source: ?
+ * Description: Todo
+ */
+
     typedef unsigned long long ull;
     const ull MOD = (ull(1) << 61) - 1;
 

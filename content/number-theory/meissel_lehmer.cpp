@@ -1,3 +1,11 @@
+/**
+ * Author: Rating MiSeRable
+ * Date: 2020-10-01
+ * License: CC0
+ * Source: ?
+ * Description: Todo
+ */
+
 ll rec(ll N, int K) {
   if (N <= 1 || K < 0) return 0;
   if (N <= P[K]) return N-1;

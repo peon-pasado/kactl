@@ -1,5 +1,10 @@
-// Lexicographically minimum suffix array & LCP array construction
-// SA: O(nlogn), LCP: O(n)
+/**
+ * Author: Rating MiSeRable
+ * Date: 2020-10-01
+ * License: CC0
+ * Source: ?
+ * Description: Todo
+ */
 
 vector<int> suffix_array(vector<int> &s) {
 	int n = s.size();

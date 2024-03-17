@@ -1,3 +1,10 @@
+/**
+ * Author: anta
+ * Date: ?
+ * Source: ?
+ * Description: Todo
+ */
+
 #define rep(i,n) for(int (i)=0;(i)<(int)(n);++(i))
 #define rer(i,l,u) for(int (i)=(int)(l);(i)<=(int)(u);++(i))
 #define reu(i,l,u) for(int (i)=(int)(l);(i)<(int)(u);++(i))

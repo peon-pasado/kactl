@@ -1,3 +1,11 @@
+/**
+ * Author: Rating MiSeRable
+ * Date: 2020-10-01
+ * License: CC0
+ * Source: ?
+ * Description: Todo
+ */
+
 template<class T> 
 struct cvxHull {
     using P = Point<T>;

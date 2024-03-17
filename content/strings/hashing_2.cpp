@@ -1,3 +1,11 @@
+/**
+ * Author: Rating MiSeRable
+ * Date: 2020-10-01
+ * License: CC0
+ * Source: ?
+ * Description: Todo
+ */
+
 using ll = long long;
 using ull = unsigned long long;
 using ld = long double;

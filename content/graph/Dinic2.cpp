@@ -1,3 +1,11 @@
+/**
+ * Author: Rating MiSeRable
+ * Date: 2020-10-01
+ * License: CC0
+ * Source: ?
+ * Description: Todo
+ */
+
 // complexity: O(n^2m)
 #include <bits/stdc++.h>
 #define all(x) x.begin(), x.end()

@@ -1,4 +1,9 @@
-/*
+/**
+ * Author: Rating MiSeRable
+ * Date: 2020-10-01
+ * License: CC0
+ * Source: ?
+ * Description: Todo
  * Problem: 2014-2015 ACM-ICPC, Asia Xian Regional Contest - The Problem to Slow Down You
  * Given two strings s and t, counts the number of common substrings between s and t
  * such that all of them are palindromes.

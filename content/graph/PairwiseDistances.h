@@ -1,3 +1,11 @@
+/**
+ * Author: Rating MiSeRable
+ * Date: 2020-10-01
+ * License: CC0
+ * Source: ?
+ * Description: Todo
+ */
+
 struct CentroidDecomposition {
     const long double PI = acos(-1);
     typedef complex<double> cd;
