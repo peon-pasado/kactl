@@ -84,5 +84,5 @@ vector<int> sais(const _Char s[], const int n, const int m)
 	static char _type[N << 1];
 	static int *sa = (int*)malloc((n + 1) * sizeof(int));
 	sais_core(n + 1, m, s, _type, _lms, _cnt, sa);
-	return vector<int>(sa, sa + n + 1);
+	return vector<int>(sa + 1, sa + n + 1);
 }
