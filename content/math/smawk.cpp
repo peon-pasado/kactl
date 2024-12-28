@@ -57,7 +57,7 @@ std::vector<usize> smawk(const usize row_size, const usize col_size,
 
 
 const auto select = [&](const usize i, const usize j, const usize k) {
-    //concave: return A[i][j] > A[i][k];
-    //convex: return A[i][j] < A[j][k];
+    //concave: return A[i][j] < A[i][k]; max
+    //convex: return A[i][j] > A[j][k]; min 
     return 1;  
 };
