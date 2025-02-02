@@ -9,6 +9,68 @@
 #include<bits/stdc++.h>
 using namespace::std;
 
+
+struct SuffixAutomaton {
+	int nodes;
+	vector<int> link; // suffix link
+	vector<int> len; // max length of the state
+	vector<int> firstpos; // last position of first occurrence of state
+	vector<vector<int>> nxt; // transitions
+	vector<bool> is_clone; // clone attribute (for counting)
+
+	SuffixAutomaton() {
+		len.emplace_back(0);
+		link.emplace_back(-1);
+		nxt.emplace_back(vector<int>(26, 0));
+		firstpos.emplace_back(-1);
+		is_clone.emplace_back(false);
+		nodes = 1;
+	}
+
+	void add_node(int new_len, int new_link, int new_fp, bool new_clone) {
+		len.emplace_back(new_len);
+		link.emplace_back(new_link);
+		nxt.emplace_back(vector<int>(26, 0));
+		firstpos.emplace_back(new_fp);
+		is_clone.emplace_back(new_clone);
+	}
+
+	int add(int p, int c) {
+		auto getNxt = [&] () {
+			if (p == -1) return 0;
+			int q = nxt[p][c]; 
+			if (len[p] + 1 == len[q]) return q;
+			int clone = nodes++;
+			add_node(len[p] + 1, link[q], firstpos[q], true);
+			nxt[nodes - 1] = nxt[q];
+			link[q] = clone;
+			while(~p and nxt[p][c] == q) {
+				nxt[p][c] = clone;
+				p = link[p];
+			}
+			return clone;
+		};
+		// if (nxt[c][p]) return getNxt();
+		// ^ need if adding > 1 string
+		int cur = nodes++; // make new state
+		add_node(len[p] + 1, -1, firstpos[p] + 1, false);
+		while(~p and !nxt[p][c]) {
+			nxt[p][c] = cur;
+			p = link[p];
+		}
+		int x = getNxt(); 
+		link[cur] = x; 
+		return cur;
+	}
+
+	void init(string s) { // add string to automaton
+		int p = 0; 
+		for(auto c : s) {
+			p = add(p, c - 'a');
+		}
+	} 
+};
+
 const int E = 26;
 const int N = 90000 + 5;
 const int SUML = 2 * N;
@@ -21,85 +83,45 @@ int nodes;
 char s[N];
 int p[SUML];
 int head[N];
-int len[SUML];
-int link[SUML];
-int nxt[SUML][E];
 long long memo[SUML];
-
-void sa_extend(int c){
-	int cur = nodes++;
-	len[cur] = len[last] + 1;
-	int p = last;
-	while(~p and !nxt[p][c]){
-		nxt[p][c] = cur;
-		p = link[p];
-	}
-	if(p == -1){
-		link[cur] = 0;
-	}
-	else{
-		int q = nxt[p][c];
-		if(len[p] + 1 == len[q]){
-			link[cur] = q;
-		}
-		else{
-			int clone = nodes++;
-			len[clone] = len[p] + 1;
-			link[clone] = link[q];
-			memcpy(nxt[clone], nxt[q], sizeof(nxt[q]));
-			while(~p and nxt[p][c] == q){
-				nxt[p][c] = clone;
-				p = link[p];
-			}
-			link[q] = link[cur] = clone;
-		}
-	}
-	last = cur;
-}
-
-void build_automaton(){
-	memset(link, -1, sizeof link);
-	nodes++;
-	for(int i = 0; s[i]; i++){
-		int c = s[i] - 'a';
-		sa_extend(c);
-	}
-}
+SuffixAutomaton Solver;
 
 void preprocess(){
-	for(int i = 0; i < nodes; i++) head[len[i]]++;
+	for(int i = 0; i < Solver.nodes; i++) head[Solver.len[i]]++;
 	int sum = 0;
 	for(int i = 0; i <= n; i++){
 		sum += head[i];
 		head[i] = sum - head[i];
 	}
-	for(int i = 0; i < nodes; i++) p[head[len[i]]++] = i;
-	for(int i = nodes - 1; i >= 0; i--){
+	for(int i = 0; i < Solver.nodes; i++) p[head[Solver.len[i]]++] = i;
+	for(int i = Solver.nodes - 1; i >= 0; i--){
 		int at = p[i];
 		memo[at] = 0;
 		for(int c = 0; c < E; c++){
-			if(nxt[at][c]) memo[at] += memo[nxt[at][c]] + 1;
+			if(Solver.nxt[at][c]) memo[at] += memo[Solver.nxt[at][c]] + 1;
 		}
 	}
 }
 
 int main(){
-	scanf("%s", s);
-	n = strlen(s);
-	build_automaton();
+	cin.tie(0) -> sync_with_stdio(false);
+	string s;
+	cin >> s;
+	n = s.size();
+	Solver.init(s);
 	preprocess();
-	scanf("%d", &q);
+	cin >> q;
 	int k;
 	while(q--){
-		scanf("%d", &k);
+		cin >> k;
 		int pos = 0;
 		while(k > 0){
 			if(k == 0) break;
 			for(int c = 0; c < E; c++){
-				int v = nxt[pos][c];
+				int v = Solver.nxt[pos][c];
 				if(!v) continue;
 				if(memo[v] + 1 >= k){
-					putchar('a' + c);
+				    cout << char('a' + c);
 					k--;
 					pos = v;
 					break;
@@ -107,7 +129,7 @@ int main(){
 				k -= memo[v] + 1;
 			}
 		}
-		putchar('\n');
+		cout << '\n';
 	}
 	return 0;
 }
