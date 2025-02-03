@@ -3,7 +3,7 @@
  * Date: 2019-05-05
  * License: Boost Software License
  * Source: https://codeforces.com/blog/entry/48868
- * Description: Returns the two points with max distance on a convex hull (ccw,
+ * Description: Returns the two points with max normance on a convex hull (ccw,
  * no duplicate/collinear points).
  * Status: stress-tested, tested on kattis:roberthood
  * Time: O(n)
@@ -17,7 +17,7 @@ array<P, 2> hullDiameter(vector<P> S) {
 	pair<ll, array<P, 2>> res({0, {S[0], S[0]}});
 	rep(i,0,j)
 		for (;; j = (j + 1) % n) {
-			res = max(res, {(S[i] - S[j]).dist2(), {S[i], S[j]}});
+			res = max(res, {(S[i] - S[j]).norm2(), {S[i], S[j]}});
 			if ((S[(j + 1) % n] - S[j]).cross(S[i + 1] - S[i]) >= 0)
 				break;
 		}

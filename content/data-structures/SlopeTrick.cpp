@@ -8,10 +8,10 @@
 
 struct SlopeTrick {
 	//public:
-		//コンストラクタ
+		//Constructor
 	SlopeTrick() :minf(0), addR(0), addL(0) {}
  
-	//x-aを右に加算する
+	//Add x-a to the right
 	void pushR(long long a) {
 		if (0 == Lque.size()) {
 			Rque.push(a - addR);
@@ -25,7 +25,7 @@ struct SlopeTrick {
 			minf += max((long long)0, l0 - a);
 		}
 	}
-	//a-xを左に加算する
+	//Add a-x to the left
 	void pushL(long long a) {
 		if (0 == Rque.size()) {
 			Lque.push(a - addL);
@@ -39,22 +39,22 @@ struct SlopeTrick {
 			minf += max((long long)0, a - r0);
 		}
 	}
-	//両側追加
+	//Add to both sides
 	void push(long long a) { pushR(a); pushL(a); }
-	//定数追加
+	//Add a constant
 	void addmin(long long a) { minf += a; }
-	//傾きが0の区間の両端
+	//The endpoints of the interval with a slope of 0
 	pair<long long, long> getZero() {
 		pair<long long, long long>p = { -LINF,LINF };
 		if (0 != Lque.size()) { p.first = Lque.top() + addL; }
 		if (0 != Rque.size()) { p.second = Rque.top() + addR; }
 		return p;
 	}
-	//累積min
+	//Cumulative min
 	void CumulativeMin() { Rque = priority_queue<long long, vector<long long>, greater<long long>>(); }
-	//右側累積min
+	//Right cumulative min
 	void CumulativeMinR() { Lque = priority_queue<long long>(); }
-	//関数の復元(遅い。非推奨？)
+	//Function restoration (slow. Not recommended?)
 	vector<long long> Fx(vector<long long> &X) {
 		vector<long long>vL;
 		vector<long long>vR;
@@ -73,11 +73,11 @@ struct SlopeTrick {
 			rep(j, vR.size()) { num += max((long long)0, X[i] - vR[j]); }
 			X[i] = num;
 		}
-		//元に戻す必要があれば
+		//If you need to revert it
 		//rep(i, vL.size()) { Lque.push(vL[i] - addL); }
 		//rep(i, vR.size()) { Rque.push(vR[i] - addR); }
 	}
-	//関数の復元(遅い。非推奨？)
+	//Restoring the function (slow. Not recommended?)
 	long long FxSimple(long long X) {
 		vector<long long>vL;
 		vector<long long>vR;
@@ -92,16 +92,16 @@ struct SlopeTrick {
 		}
 		return ret;
 	}
-	//右側スライド
+	//Right slide
 	void SlideR(long long x) { addR += x; }
-	//左側スライド
+	//Left slide
 	void SlideL(long long x) { addL += x; }
-	//全体スライド(無制限)
+	//Full slide (unlimited)
 	void Slid(long long x) { SlideL(x), SlideR(x); };
-	//全体スライド(addL <= addRにならないと壊れる)
-	//g(x) = min f(y) y∈[x-b,x-a]
+	//Full slide (it breaks if addL <= addR)
+	//g(x) = min f(y) y in [x-b,x-a]
 	void Slid(long long b, long long a) { SlideL(a), SlideR(b); };
-	//マージ(マージ元は以降使えなくなる。)
+	//Merge (the source of the merge will no longer be usable thereafter.)
 	void merge(SlopeTrick &st) {
 		if ((Lque.size() + Rque.size()) < (st.Lque.size() + st.Rque.size())) {
 			swap(Lque, st.Lque);
@@ -123,9 +123,9 @@ struct SlopeTrick {
 		addL += st.addL;
 	}
  
-	priority_queue<long long> Lque;	//左側(大きい順)
-	priority_queue<long long, vector<long long>, greater<long long>> Rque;	//右側(小さい順)
-	long long minf;					//最小値
-	long long addR;					//右側集合全てにたされる数
-	long long addL;					//左側集合全てにたされる数
+	priority_queue<long long> Lque;	//Left side (in descending order)
+	priority_queue<long long, vector<long long>, greater<long long>> Rque;	//Right side (in ascending order)
+	long long minf;					//Minimum value
+	long long addR;					//The number that is added to all elements of the right-side set
+	long long addL;					//The number that is added to all elements of the left-side set
 };

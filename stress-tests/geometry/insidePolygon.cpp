@@ -35,7 +35,7 @@ bool insidePolygon(It begin, It end, const P& p,
 }
 typedef Point<double> P;
 bool eq(P a, P b) {
-    return (a-b).dist()<EPS;
+    return (a-b).norm()<EPS;
 }
 const int NUMPOLY=100;
 const int PTPERPOLY=100;

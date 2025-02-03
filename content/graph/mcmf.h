@@ -6,6 +6,12 @@
  * Description: Todo
  */
 
+#define set_to(container, value) fill(begin(container), end(container), value)
+
+const int inf = 1e9;
+
+typedef pair<int, int> ii;
+
 struct MinCostMaxFlow {
     struct Edge {
         int to, cap, flow, cost, link;
@@ -21,7 +27,7 @@ struct MinCostMaxFlow {
     void addEdge(int a, int b, int cost, int cap) {
         if (a == b) return;
         int pa = sz(g[a]), pb = sz(g[b]);
-        g[a].eb(b, cap, cost, pb); g[b].eb(a, 0, -cost, pa);
+        g[a].emplace_back(b, cap, cost, pb); g[b].emplace_back(a, 0, -cost, pa);
     }
  
     bool spfa(int src, int snk) {
@@ -34,7 +40,7 @@ struct MinCostMaxFlow {
             int w = q.first;
             if (x == snk) return 1;
             if (d[x] < w) continue;
-            re(i, 0, sz(g[x])) {
+            rep(i, 0, sz(g[x])) {
                 auto e = g[x][i];
                 if (e.flow < e.cap and w + e.cost < d[e.to]) {
                     d[e.to] = w + e.cost;

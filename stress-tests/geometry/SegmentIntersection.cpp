@@ -33,7 +33,7 @@ int segmentIntersection(const P& s1, const P& e1,
 }
 typedef Point<double> P;
 bool eq(P a, P b) {
-    return (a-b).dist()<1e-8;
+    return (a-b).norm()<1e-8;
 }
 int main() {
     rep(t,0,1000000) {

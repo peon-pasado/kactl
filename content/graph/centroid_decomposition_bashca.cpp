@@ -13,35 +13,35 @@ const int maxn = 3e5 + 10;
 const int maxl = 18;
 using ll = long long;
 vector<int> g[maxn];
-int sz[maxn], pi[maxn];
+int size[maxn], pi[maxn];
 bool blocked[maxn];
 int n;
 
 int find_centroid(int v, int parent, int n_v) {
-  sz[v] = 1;
+  size[v] = 1;
   int max_sz = 0;
   int centroid = 0;
   for (int u : g[v]) {
     if (!blocked[u] && (u ^ parent)) {
       centroid ^= find_centroid(u, v, n_v);
-      sz[v] += sz[u];
-      max_sz = max(max_sz, sz[u]);
+      size[v] += size[u];
+      max_sz = max(max_sz, size[u]);
     }
   }
-  max_sz = max(max_sz, n_v - sz[v]);
+  max_sz = max(max_sz, n_v - size[v]);
   if (2 * max_sz <= n_v) 
     pi[centroid = v] = parent;
   return centroid;
 }
 
 int find_centroid(int v, int p, int n_v) {
-  sz[v] = 1;
+  size[v] = 1;
   int centroid = -1;
   for (int u : g[v]) {
     if (u == p || blocked[u]) continue;
     int c = find_centroid(u, v, n_v);
-    sz[v] += sz[u];
-    if (2 * sz[u] > n) centroid = c;
+    size[v] += size[u];
+    if (2 * size[u] > n) centroid = c;
   }
   if (centroid==-1) centroid=v;
   return centroid;
@@ -50,11 +50,11 @@ int find_centroid(int v, int p, int n_v) {
 
 void decompose(int x, int parent = -1, int n_v = n) {
   x = find_centroid(x, -1, n_v);
-  if (~pi[x]) sz[pi[x]] = n_v - sz[x];
+  if (~pi[x]) size[pi[x]] = n_v - size[x];
   pi[x] = parent;
   blocked[x] = 1;
   for (int v : g[x]) if (!blocked[v]) 
-    decompose(v, x, sz[v]);
+    decompose(v, x, size[v]);
 }
 
 int TS;

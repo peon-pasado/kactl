@@ -11,14 +11,14 @@
 const int inf = 1e9; 
 struct CentroidDecomposition {
 	vector<vector<int>> T;
-	vector<int> sz, P, rank;
+	vector<int> size, P, rank;
 	vector<bool> block;
 	vector<vector<int>> dist;
 	vector<int> res;
 	int root;
 	CentroidDecomposition(int n):
 		T(n)
-		, sz(n)
+		, size(n)
 		, P(n, -1)
 		, block(n)
 		, rank(n)
@@ -34,17 +34,17 @@ struct CentroidDecomposition {
 		return x != p and not block[x];
 	}
 	int dfs(int x, int p=-1) {
-		sz[x] = 1;
+		size[x] = 1;
 		for (int v : T[x]) {
 			if (valid(v, p)) {
-				sz[x] += dfs(v, x);
+				size[x] += dfs(v, x);
 			}
 		}
-		return sz[x];
+		return size[x];
 	}
 	int get_centroid(int x, int p, int n) {
 		for (int v : T[x]) {
-			if (valid(v, p) and sz[v] > n>>1) {
+			if (valid(v, p) and size[v] > n>>1) {
 				return get_centroid(v, x, n);
 			}
 		}

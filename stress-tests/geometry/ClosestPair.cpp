@@ -13,8 +13,8 @@ double cp_sub(IIt ya, IIt yaend, IIt xa, It &i1, It &i2) {
 	typedef typename iterator_traits<It>::value_type P;
 	int n = yaend-ya, split = n/2;
 	if(n <= 3) { // base case
-		double a = (*xa[1]-*xa[0]).dist(), b = 1e50, c = 1e50;
-		if(n==3) b=(*xa[2]-*xa[0]).dist(), c=(*xa[2]-*xa[1]).dist();
+		double a = (*xa[1]-*xa[0]).norm(), b = 1e50, c = 1e50;
+		if(n==3) b=(*xa[2]-*xa[0]).norm(), c=(*xa[2]-*xa[1]).norm();
 		if(a <= b) { i1 = xa[1];
 			if(a <= c) return i2 = xa[0], a;
 			else return i2 = xa[2], c;
@@ -26,7 +26,7 @@ double cp_sub(IIt ya, IIt yaend, IIt xa, It &i1, It &i2) {
 	P splitp = *xa[split];
 	double splitx = splitp.x;
 	for(IIt i = ya; i != yaend; ++i) { // Divide
-		if(*i != xa[split] && (**i-splitp).dist2() < 1e-12)
+		if(*i != xa[split] && (**i-splitp).norm2() < 1e-12)
 			return i1 = *i, i2 = xa[split], 0;// nasty special case!
 		if (**i < splitp) ly.push_back(*i);
 		else ry.push_back(*i);
@@ -45,7 +45,7 @@ double cp_sub(IIt ya, IIt yaend, IIt xa, It &i1, It &i2) {
 		for(IIt j = i+1; j != stripy.end(); ++j) {
 			const P &p2 = **j;
 			if(p2.y-p1.y > a) break;
-			double d2 = (p2-p1).dist2();
+			double d2 = (p2-p1).norm2();
 			if(d2 < a2) i1 = *i, i2 = *j, a2 = d2;
 	}	}
 	return sqrt(a2);
@@ -83,12 +83,12 @@ int main() {
 		ll foundDist = -1, oldDist = -1, theDist = -1;
 		if (mode == 1 || mode == 3) {
 			auto pa = closest(ps);
-			theDist = foundDist = (pa.first - pa.second).dist2();
+			theDist = foundDist = (pa.first - pa.second).norm2();
 		}
 		if (mode == 2 || mode == 3) {
 			vector<P>::iterator i1, i2;
 			old::closestpair(all(ps), i1, i2);
-			theDist = oldDist = (*i1 - *i2).dist2();
+			theDist = oldDist = (*i1 - *i2).norm2();
 		}
 		sum += theDist;
 		// cerr << theDist << endl;
@@ -114,10 +114,10 @@ int main() {
 		}
 		ll minDist = LLONG_MAX;
 		rep(i,0,n) rep(j,i+1,n) {
-			minDist = min(minDist, (ps[i] - ps[j]).dist2());
+			minDist = min(minDist, (ps[i] - ps[j]).norm2());
 		}
 		auto pa = closest(ps);
-		ll foundDist = (pa.first - pa.second).dist2();
+		ll foundDist = (pa.first - pa.second).norm2();
 		if (minDist != foundDist) {
 			cerr << "failed at " << it << endl;
 			return 1;

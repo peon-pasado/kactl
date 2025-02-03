@@ -6,9 +6,9 @@
 namespace orig{
 typedef Point<long double> P;
 long double areaCT(P pa, P pb, long double r) {
-    if (pa.dist() < pb.dist()) swap(pa, pb);
-    if (sgn(pb.dist()) == 0) return 0;
-    long double a = pb.dist(), b = pa.dist(), c = (pb - pa).dist();
+    if (pa.norm() < pb.norm()) swap(pa, pb);
+    if (sgn(pb.norm()) == 0) return 0;
+    long double a = pb.norm(), b = pa.norm(), c = (pb - pa).norm();
     long double sinB = fabs(pb.cross(pb - pa) / a / c), cosB = pb.dot(pb - pa) / a / c,
            sinC = fabs(pa.cross(pb) / a / b), cosC = pa.dot(pb) / a / b;
     long double B = atan2(sinB, cosB), C = atan2(sinC, cosC);

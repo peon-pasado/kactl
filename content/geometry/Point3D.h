@@ -43,6 +43,7 @@ template<class T> struct Point3D {
 	}
 };
 
+/*
 
 Matrix translate(Point p) { //T(u) = u + p 
   Matrix R;
@@ -79,5 +80,4 @@ Matrix rotate(Point p, double alpha) { //rotate alpha counterclockwise through v
   return R;
 }
 
-
-
+*/

@@ -18,16 +18,16 @@ int main() {
 		pair<P, P> out;
 		bool ret = circleInter(a, b, ra, rb, &out);
 		if (ret) {
-			assert(abs((out.first - a).dist() - ra) < 1e-9);
-			assert(abs((out.second - a).dist() - ra) < 1e-9);
-			assert(abs((out.first - b).dist() - rb) < 1e-9);
-			assert(abs((out.second - b).dist() - rb) < 1e-9);
+			assert(abs((out.first - a).norm() - ra) < 1e-9);
+			assert(abs((out.second - a).norm() - ra) < 1e-9);
+			assert(abs((out.first - b).norm() - rb) < 1e-9);
+			assert(abs((out.second - b).norm() - rb) < 1e-9);
 		}
 
 		// Hill-climb the answer
 		auto func = [&](P x) {
-			double d1 = (x - a).dist() - ra;
-			double d2 = (x - b).dist() - rb;
+			double d1 = (x - a).norm() - ra;
+			double d2 = (x - b).norm() - rb;
 			return d1*d1 + d2*d2;
 		};
 		P start = (a + b) / 2 + (a - b).perp();
@@ -46,10 +46,10 @@ int main() {
 			}
 		}
 
-		if (abs((cur.second - a).dist() - ra) < 1e-9 &&
-		    abs((cur.second - b).dist() - rb) < 1e-9) {
+		if (abs((cur.second - a).norm() - ra) < 1e-9 &&
+		    abs((cur.second - b).norm() - rb) < 1e-9) {
 			assert(ret);
-			assert((out.first - cur.second).dist() < 1e-6 || (out.second - cur.second).dist() < 1e-6);
+			assert((out.first - cur.second).norm() < 1e-6 || (out.second - cur.second).norm() < 1e-6);
 		} else {
 			assert(!ret);
 		}

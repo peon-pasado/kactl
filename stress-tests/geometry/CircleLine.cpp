@@ -9,12 +9,12 @@ int main() {
     {
         auto res = circleLine(P(0, 0), 1, P(-1, -1), P(1, 1));
         assert(res.size() == 2);
-        assert((res[1]-P(sqrt(2)/2, sqrt(2)/2)).dist() < 1e-8);
+        assert((res[1]-P(sqrt(2)/2, sqrt(2)/2)).norm() < 1e-8);
     }
     {
         auto res = circleLine(P(0, 0), 1, P(-5,  1), P(5, 1));
         assert(res.size() == 1);
-        assert((res[0]-P(0,1)).dist() < 1e-8);
+        assert((res[0]-P(0,1)).norm() < 1e-8);
     }
     {
         auto res = circleLine(P(4, 4), 1, P(0,  0), P(5, 0));
@@ -35,14 +35,14 @@ int main() {
 		assert(sz(points) <= 2);
 		for (P p : points) {
 			// Point is on circle
-			assert(abs((p - c).dist() - r) < 1e-6);
+			assert(abs((p - c).norm() - r) < 1e-6);
 			// Point is on line
 			assert(lineDist(a, b, p) < 1e-6);
 		}
 
 		// Best-effort completeness check:
 		// in some easy cases we must have points in the intersection.
-		if ((a - c).dist() < r - 1e-6 || (b - c).dist() < r - 1e-6 || ((a + b) / 2 - c).dist() < r - 1e-6) {
+		if ((a - c).norm() < r - 1e-6 || (b - c).norm() < r - 1e-6 || ((a + b) / 2 - c).norm() < r - 1e-6) {
 			assert(!points.empty());
 		}
 	}

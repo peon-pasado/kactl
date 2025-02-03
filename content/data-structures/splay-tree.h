@@ -25,9 +25,9 @@ struct Node {
     }
 
     void update() {
-        sz = 1;
-        if (l) l->p = this, sz += l->sz;
-        if (r) r->p = this, sz += r->sz;
+        cnt = 1;
+        if (l) l->p = this, cnt += l->cnt;
+        if (r) r->p = this, cnt += r->cnt;
     }
 };
 
@@ -42,10 +42,10 @@ struct splay_tree {
         }
         if (v==u->l) u->l = v->r, v->r = u;
         else u->r = v->l, v->l = u;
-        u->pull(); v->pull();
+        u->update(); v->update();
     }
  
-    void splay(node* v) {
+    void splay(Node* v) {
         if (!v) return;
         while (!v || v->p) {
             Node* u = v->p;
@@ -57,9 +57,4 @@ struct splay_tree {
         }
     }
 };
-
-int main() {    
-
-    return 0;
-}
 
